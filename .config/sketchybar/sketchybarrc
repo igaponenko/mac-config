@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# TEST TEST TEST
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
