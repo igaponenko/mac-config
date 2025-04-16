@@ -18,11 +18,23 @@ default=(
   label.padding_left=3
   label.padding_right=3
 )
-sketchybar --default "${default[@]}"
+default_simple=(
+  padding_left=0
+  padding_right=0
+  icon.font="SF Pro:Semibold:13.3"
+  label.font="SF Pro:Semibold:13.3"
+  icon.color=0xffffffff
+  label.color=0xffffffff
+  icon.padding_left=6
+  icon.padding_right=3
+  label.padding_left=3
+  label.padding_right=3
+)
+sketchybar --default "${default_simple[@]}"
 
 # -- AeroSpace layout --
 # Add the aerospace_workspace_change event we specified in aerospace.toml
-sketchybar --add event aerospace_workspace_change
+# sketchybar --add event aerospace_workspace_change
 
 # This only works for single monitor configs!
 for sid in $(aerospace list-workspaces --monitor 1); do
@@ -52,43 +64,25 @@ for sid in $(aerospace list-workspaces --monitor 1); do
     script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
 
-# Load Icons on startup
-for sid in $(aerospace list-workspaces --monitor 1 --empty no); do
-  apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
-
-  sketchybar --set space.$sid drawing=on
-
-  icon_strip=" "
-  if [ "${apps}" != "" ]; then
-    while read -r app; do
-      icon_strip+=" $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")"
-    done <<<"${apps}"
-  else
-    icon_strip=""
-  fi
-  sketchybar --set space.$sid label="$icon_strip"
-done
-
-sketchybar --add item space_separator left \
-  --set space_separator icon="💩" \
-  icon.padding_left=4 \
-  label.drawing=off \
-  background.drawing=off \
-  script="$PLUGIN_DIR/space_windows.sh" \
-  --subscribe space_separator aerospace_workspace_change
-
-# Front app!!
-sketchybar --add item front_app left \
-  --set front_app icon.drawing=off \
-  script="$PLUGIN_DIR/front_app.sh" \
-  --subscribe front_app front_app_switched
-
 calendar=(
   calendar icon=􀧞
   label.width=110 \ 
   label.padding_right=0
   update_freq=1 \ 
   script="$PLUGIN_DIR/calendar.sh"
+)
+
+time=(
+  label.width=110 \ 
+  label.padding_right=0
+  script="$PLUGIN_DIR/time.sh"
+  update_freq=1 \ 
+)
+
+date=(
+  label.padding_right=0
+  script="$PLUGIN_DIR/date.sh"
+  update_freq=60\ 
 )
 
 battery=(
@@ -124,15 +118,20 @@ ram=(
   script="$PLUGIN_DIR/ram.sh"
 )
 
+# -- Left Side Notch Items --
+sketchybar --add item battery q --set battery "${battery[@]}" --subscribe battery system_woke power_source_change
+
 # -- Right Side Notch Items --
-sketchybar --add item media e --set media "${media[@]}" --subscribe media media_change
+sketchybar --add item time e --set time "${time[@]}"
+# sketchybar --add item media e --set media "${media[@]}" --subscribe media media_change
 
 # -- Right Side Items --
-sketchybar --add item calendar right --set calendar "${calendar[@]}"
+sketchybar --add item date right --set date "${date[@]}"
+# sketchybar --add item calendar right --set calendar "${calendar[@]}"
 # sketchybar --add item volume right --set volume "${volume[@]}" --subscribe volume volume_change
-sketchybar --add item battery right --set battery "${battery[@]}" --subscribe battery system_woke power_source_change
-sketchybar --add item cpu right --set cpu "${cpu[@]}"
-sketchybar --add item ram right --set ram "${ram[@]}"
+# sketchybar --add item battery right --set battery "${battery[@]}" --subscribe battery system_woke power_source_change
+# sketchybar --add item cpu right --set cpu "${cpu[@]}"
+# sketchybar --add item ram right --set ram "${ram[@]}"
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
