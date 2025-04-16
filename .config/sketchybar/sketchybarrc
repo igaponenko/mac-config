@@ -21,8 +21,8 @@ default=(
 default_simple=(
   padding_left=0
   padding_right=0
-  icon.font="SF Pro:Semibold:13.3"
-  label.font="SF Pro:Semibold:13.3"
+  icon.font="SF Pro:Semibold:13.8"
+  label.font="SF Pro:Semibold:13.8"
   icon.color=0xffffffff
   label.color=0xffffffff
   icon.padding_left=6
@@ -80,6 +80,7 @@ time=(
 )
 
 date=(
+
   label.padding_right=0
   script="$PLUGIN_DIR/date.sh"
   update_freq=60\ 
