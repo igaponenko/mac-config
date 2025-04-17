@@ -35,6 +35,9 @@ else
   MINUTES=$(echo "$TIME_LEFT" | cut -d: -f2)
   if [[ $HOURS -eq 0 ]]; then
     TIME_LABEL="${MINUTES}"
+    if [[ $MINUTES -eq 0 ]]; then
+      TIME_LABEL=""
+    fi
   else
     TIME_LABEL="${HOURS}:${MINUTES}"
   fi

@@ -120,14 +120,14 @@ ram=(
 )
 
 # -- Left Side Notch Items --
-sketchybar --add item battery q --set battery "${battery[@]}" --subscribe battery system_woke power_source_change
+sketchybar --add item battery right --set battery "${battery[@]}" --subscribe battery system_woke power_source_change
 
 # -- Right Side Notch Items --
 sketchybar --add item time e --set time "${time[@]}"
 # sketchybar --add item media e --set media "${media[@]}" --subscribe media media_change
 
 # -- Right Side Items --
-sketchybar --add item date right --set date "${date[@]}"
+sketchybar --add item date q --set date "${date[@]}"
 # sketchybar --add item calendar right --set calendar "${calendar[@]}"
 # sketchybar --add item volume right --set volume "${volume[@]}" --subscribe volume volume_change
 # sketchybar --add item battery right --set battery "${battery[@]}" --subscribe battery system_woke power_source_change
