@@ -75,6 +75,8 @@ calendar=(
 time=(
   label.width=110 \ 
   label.padding_right=0
+  label.padding_left=0
+  icon.padding_left=0
   script="$PLUGIN_DIR/time.sh"
   update_freq=1 \ 
 )
